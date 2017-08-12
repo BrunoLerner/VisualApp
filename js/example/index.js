@@ -30,7 +30,6 @@ function getRandomColor() {
 var colorKeysAlreadyUsed = new Map();
 // var relevantsProperties = ["Browser","Referrer","uid"];
 
-
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -77,13 +76,31 @@ d3.json("data/candidates_task.json",function (data){
         .attr("transform", "translate(" + x(0) + ",0)")
         .call(yAxis);
 
+
+    var keys = Array.from(colorKeysAlreadyUsed.keys());
+    var values = Array.from(colorKeysAlreadyUsed.values());
+    var legendColors = d3.scale.ordinal()
+        .range(values);
+
     var legend = svg.append("g")
         .attr("font-family", "sans-serif")
         .attr("font-size", 10)
         .attr("text-anchor", "end")
         .selectAll("g")
-        .data(colorKeysAlreadyUsed)
-        .enter().append("g");
-        // .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+        .data(keys)
+        .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")";  });
 
+    legend.append("rect")
+        .attr("x", width - 19)
+        .attr("width", 19)
+        .attr("height", 19)
+        .attr("fill",legendColors);
+
+    legend.append("text")
+        .attr("x", width - 24)
+        .attr("y", 9.5)
+        .attr("dy", "0.32em")
+        .text(function(d) { return d; });
 });
+
