@@ -36,7 +36,7 @@ var svg = d3.select("body").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("data/candidates_task.json",function (data){
+d3.json("~app/example/data/candidates_task.json",function (data){
 
   document.getElementById("property").innerHTML = data.anomalousProperty.key + " : " + data.anomalousProperty.value;
 
